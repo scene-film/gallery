@@ -517,7 +517,7 @@
 
         // ギャラリー描画
         // 無限スクロール用の設定
-        const ITEMS_PER_PAGE = 12;
+        const ITEMS_PER_PAGE = 15;
         let displayedCount = ITEMS_PER_PAGE;
         let isLoadingMore = false;
 
