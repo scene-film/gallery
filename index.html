@@ -506,6 +506,23 @@
         </div>
     </div>
 
+    <!-- 確認モーダル -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-content" style="text-align:center;">
+                <svg viewBox="0 0 24 24" style="width:48px;height:48px;fill:#f44336;margin-bottom:1rem;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <h2 class="modal-title" style="font-size:1.3rem;margin-bottom:0.5rem;" id="confirm-title">確認</h2>
+                <p id="confirm-message" style="color:var(--text-secondary);margin-bottom:1.5rem;"></p>
+                <div style="display:flex;gap:1rem;">
+                    <button class="nav-btn" onclick="closeConfirmModal(false)" style="flex:1;">キャンセル</button>
+                    <button class="nav-btn" id="confirm-ok-btn" onclick="closeConfirmModal(true)" style="flex:1;background:#f44336;border-color:#f44336;">削除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 選択ツールバー -->
     <div class="selection-toolbar" id="selection-toolbar">
         <span class="selection-count" id="selection-count">0件選択中</span>
