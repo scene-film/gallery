@@ -3,7 +3,7 @@
 // ╚════════════════════════════════════════════════════════════════╝
 
 const CONFIG = {
-    GAS_URL: 'https://script.google.com/macros/s/AKfycbwnD8_5iWyrWMbQQNQs5EEUHjRrSy0LooMx5URk52B-WicWuGOwY8QpSasjq9tIw4Rbww/exec'
+    GAS_URL: 'https://script.google.com/macros/s/AKfycbwCsTwwNQgsVILQPfjoEWcMSbX5zdqeHPjfdZEEOuRECav9cG_62OT90t0kvMNT9dvpCA/exec'
 };
 
 // ╔════════════════════════════════════════════════════════════════╗
@@ -228,6 +228,23 @@ async function postToGas(data) {
     } catch (error) {
         console.error('POST error:', error);
         return { success: false, error: error.message };
+    }
+}
+
+async function postToGasWithResponse(data) {
+    try {
+        const response = await fetch(CONFIG.GAS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(data),
+            redirect: 'follow'
+        });
+        const text = await response.text();
+        console.log('GAS response:', text);
+        return JSON.parse(text);
+    } catch (error) {
+        console.error('POST with response error:', error);
+        throw error;
     }
 }
 
@@ -1789,7 +1806,8 @@ async function submitVideo() {
             progressText.textContent = 'Dropboxにアップロード中...';
             progressFill.style.width = '30%';
             const thumbnailToSend = thumbnail.startsWith('data:') ? thumbnail : '';
-            await postToGas({ action: 'uploadAndSave', fileBase64: fileBase64, fileName: selectedFile.name, mimeType: selectedFile.type, title, description: features, category, thumbnail: thumbnailToSend });
+            const uploadResult = await postToGasWithResponse({ action: 'uploadAndSave', fileBase64: fileBase64, fileName: selectedFile.name, mimeType: selectedFile.type, title, description: features, category, thumbnail: thumbnailToSend });
+            if (!uploadResult.success) throw new Error(uploadResult.error || 'Dropboxアップロードに失敗しました');
             progressFill.style.width = '100%';
             progressText.textContent = '完了！';
             setTimeout(() => {
