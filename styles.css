@@ -2064,19 +2064,37 @@
             /* 選択ツールバー */
             .selection-toolbar {
                 padding: 8px 12px;
-                gap: 8px;
-                flex-wrap: wrap;
-                justify-content: center;
+                gap: 6px;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                max-width: calc(100vw - 24px);
             }
             
             .selection-toolbar button {
-                padding: 6px 10px;
-                font-size: 12px;
+                padding: 6px 8px;
+                font-size: 11px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            
+            .selection-toolbar button svg {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .selection-toolbar button span,
+            .selection-toolbar button:not(.cancel-select):not(.delete-selected) {
+                display: flex;
+                align-items: center;
+                gap: 4px;
             }
             
             .selection-count {
                 min-width: auto;
-                font-size: 12px;
+                font-size: 11px;
+                white-space: nowrap;
+                flex-shrink: 0;
             }
             
             /* モーダル */
