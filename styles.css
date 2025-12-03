@@ -1994,7 +1994,7 @@
             
             /* メイン領域調整 */
             main { 
-                padding: 200px 1rem 2rem; /* デフォルト値、JSで動的に調整 */
+                padding: 1rem; /* JSで動的にpadding-topを調整 */
                 margin-left: 0;
                 margin-right: 0;
             }
