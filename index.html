@@ -3689,6 +3689,12 @@
                 hideLoading();
                 closeAddBookmarkCategoryModal();
                 
+                // ブックマーク一覧モーダルからの追加の場合、カテゴリボタンを更新
+                if (window.addBookmarkCategoryFromModal) {
+                    window.addBookmarkCategoryFromModal = false;
+                    renderBookmarksCategoryButtons();
+                }
+                
             } catch (error) {
                 hideLoading();
                 console.error('Add category error:', error);
@@ -5498,31 +5504,13 @@
         }
 
         async function showAddBookmarkCategoryFromModal() {
-            const name = prompt('新しいブックマークカテゴリ名を入力:');
-            if (!name || !name.trim()) return;
+            // ブックマーク一覧モーダルからの追加 - モーダルを使用
+            document.getElementById('add-bookmark-category-modal').classList.add('active');
+            document.getElementById('new-bookmark-category-name').value = '';
+            document.getElementById('new-bookmark-category-name').focus();
             
-            if (bookmarkCategoryList.includes(name.trim())) {
-                alert('このカテゴリは既に存在します');
-                return;
-            }
-            
-            showLoading('カテゴリを追加中...');
-            
-            try {
-                // スプレッドシートに追加
-                await postToGas({
-                    action: 'addBookmarkCategory',
-                    name: name.trim()
-                });
-                
-                bookmarkCategoryList.push(name.trim());
-                hideLoading();
-                renderBookmarksCategoryButtons();
-            } catch (error) {
-                hideLoading();
-                console.error('Add category error:', error);
-                alert('カテゴリの追加に失敗しました');
-            }
+            // 追加後にブックマーク一覧を更新するフラグ
+            window.addBookmarkCategoryFromModal = true;
         }
 
         document.getElementById('modal').addEventListener('click', e => {
