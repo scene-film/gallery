@@ -2910,7 +2910,7 @@
         
         const CONFIG = {
             // ↓↓↓ Google Apps ScriptのウェブアプリURLをここに貼り付け ↓↓↓
-            GAS_URL: 'https://script.google.com/macros/s/AKfycbwCsTwwNQgsVILQPfjoEWcMSbX5zdqeHPjfdZEEOuRECav9cG_62OT90t0kvMNT9dvpCA/exec'
+            GAS_URL: 'https://script.google.com/macros/s/AKfycbzURvmK5bTrs7pP3436KQReYQrcW2G-nN-3c2DON1T8oZZcbzU4FqLirMt0r93hEnY-wQ/exec'
             // ↑↑↑ ここまで ↑↑↑
         };
         
@@ -4842,7 +4842,15 @@
                     progressText.textContent = 'ファイルを準備中...';
                     progressFill.style.width = '10%';
                     
+                    console.log('Dropbox upload started, file:', selectedFile.name, 'size:', selectedFile.size);
+                    
+                    // ファイルサイズチェック（50MB制限）
+                    if (selectedFile.size > 50 * 1024 * 1024) {
+                        throw new Error('ファイルサイズが大きすぎます（最大50MB）');
+                    }
+                    
                     const fileBase64 = await fileToBase64(selectedFile);
+                    console.log('Base64 encoded, length:', fileBase64.length);
                     
                     progressText.textContent = 'Dropboxにアップロード中...（大きなファイルは時間がかかります）';
                     progressFill.style.width = '30%';
@@ -4850,8 +4858,7 @@
                     // サムネイルがBase64の場合はそのまま送信
                     const thumbnailToSend = thumbnail.startsWith('data:') ? thumbnail : '';
                     
-                    // Dropboxアップロード（no-corsモードで送信、レスポンスは取得できない）
-                    await postToGas({
+                    const payload = {
                         action: 'uploadAndSave',
                         fileBase64: fileBase64,
                         fileName: selectedFile.name,
@@ -4860,16 +4867,25 @@
                         description: features,
                         category,
                         thumbnail: thumbnailToSend
-                    });
+                    };
+                    
+                    console.log('Sending to GAS, payload size:', JSON.stringify(payload).length);
+                    
+                    // Dropboxアップロード（no-corsモードで送信、レスポンスは取得できない）
+                    await postToGas(payload);
+                    
+                    console.log('POST sent, waiting for GAS processing...');
                     
                     // GAS処理に時間がかかるため、少し待ってから完了扱い
                     progressText.textContent = 'サーバーで処理中...';
                     progressFill.style.width = '70%';
                     
-                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    await new Promise(resolve => setTimeout(resolve, 5000));
                     
                     progressFill.style.width = '100%';
                     progressText.textContent = '完了！';
+                    
+                    console.log('Upload process completed');
                     
                     setTimeout(() => {
                         document.getElementById('upload-form').style.display = 'none';
