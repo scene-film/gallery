@@ -547,6 +547,36 @@
         </button>
     </div>
 
+    <!-- ゴミ箱モーダル -->
+    <div class="modal-overlay" id="trash-modal">
+        <div class="modal trash-modal-inner">
+            <button class="modal-close" onclick="closeTrashModal()">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="modal-content">
+                <div class="trash-header">
+                    <div class="trash-header-left">
+                        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        <h2>ゴミ箱</h2>
+                    </div>
+                    <div class="trash-actions">
+                        <button onclick="restoreAllFromTrash()">
+                            <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+                            全て復元
+                        </button>
+                        <button class="empty-trash-btn" onclick="emptyTrash()">
+                            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            ゴミ箱を空にする
+                        </button>
+                    </div>
+                </div>
+                <div class="trash-grid" id="trash-grid"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
