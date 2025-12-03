@@ -3565,11 +3565,11 @@
                 return;
             }
             
-            const videoId = parseInt(modal.dataset.videoId);
+            const videoId = modal.dataset.videoId;
             const videoCategory = modal.dataset.videoCategory;
             
-            // 対象の動画を取得
-            const video = videos.find(v => v.id === videoId);
+            // 対象の動画を取得（IDを文字列として比較）
+            const video = videos.find(v => String(v.id) === String(videoId));
             if (!video) {
                 alert('動画が見つかりません');
                 return;
