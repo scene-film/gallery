@@ -176,6 +176,32 @@
             margin-bottom: 0;
         }
 
+        .page-title-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-category-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-category-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
         .status-bar-mini {
             display: flex;
             align-items: center;
@@ -398,6 +424,48 @@
             scrollbar-width: thin;
             scrollbar-color: #ccc transparent;
             flex: 1;
+        }
+
+        .filter-btn-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .filter-count {
+            font-size: 0.75em;
+            opacity: 0.7;
+        }
+
+        .filter-edit-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+
+        .filter-btn-wrapper:hover .filter-edit-btn {
+            opacity: 1;
+        }
+
+        .filter-edit-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent);
+        }
+
+        .filter-edit-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
         }
 
         .filters::-webkit-scrollbar {
