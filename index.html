@@ -506,6 +506,30 @@
         </div>
     </div>
 
+    <!-- 選択ツールバー -->
+    <div class="selection-toolbar" id="selection-toolbar">
+        <span class="selection-count" id="selection-count">0件選択中</span>
+        <button onclick="selectAllVideos()">
+            <svg viewBox="0 0 24 24"><path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z"/></svg>
+            全選択
+        </button>
+        <button onclick="deselectAllVideos()">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            選択解除
+        </button>
+        <button onclick="bookmarkSelectedVideos()">
+            <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+            ブックマーク
+        </button>
+        <button class="delete-selected" onclick="moveSelectedToTrash()">
+            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            ゴミ箱へ
+        </button>
+        <button class="cancel-select" onclick="exitSelectMode()">
+            キャンセル
+        </button>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
