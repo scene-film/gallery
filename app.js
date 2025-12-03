@@ -6,7 +6,7 @@
         
         const CONFIG = {
             // ↓↓↓ Google Apps ScriptのウェブアプリURLをここに貼り付け ↓↓↓
-            GAS_URL: 'https://script.google.com/macros/s/AKfycbyRuGwUyr3kF_88D9vFCLhjrX53Xujpg_ASoEHoEJeYopqlGRsffed9YLl8XOdxMV23Uw/exec'
+            GAS_URL: 'https://script.google.com/macros/s/AKfycbzQIoE7bJlCCINqFv3_MNzkJ7Qr0h6FKlGJbU-Y-nmZuiqYilW_EIjZ4ZkiNg-BCH0ULg/exec'
             // ↑↑↑ ここまで ↑↑↑
         };
         
