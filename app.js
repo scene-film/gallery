@@ -28,6 +28,27 @@
         let searchQuery = '';
         let bookmarkSearchQuery = '';
         let currentBookmarkFilter = 'All';
+        
+        // 確認モーダル用
+        let confirmResolve = null;
+        
+        function showConfirmModal(message, title = '確認', okText = '削除') {
+            return new Promise((resolve) => {
+                confirmResolve = resolve;
+                document.getElementById('confirm-title').textContent = title;
+                document.getElementById('confirm-message').textContent = message;
+                document.getElementById('confirm-ok-btn').textContent = okText;
+                document.getElementById('confirm-modal').classList.add('active');
+            });
+        }
+        
+        function closeConfirmModal(result) {
+            document.getElementById('confirm-modal').classList.remove('active');
+            if (confirmResolve) {
+                confirmResolve(result);
+                confirmResolve = null;
+            }
+        }
 
         // ===== リンクタイプ判定 =====
         // YouTube, Vimeo, Dropbox以外のURLは外部リンクとして扱う
@@ -874,7 +895,8 @@
         async function deleteBookmarkCategory() {
             const categoryName = editingBookmarkCategory;
             
-            if (!confirm(`「${categoryName}」カテゴリを削除しますか？\nこのカテゴリのブックマークも全て削除されます。`)) {
+            const confirmed = await showConfirmModal(`「${categoryName}」カテゴリを削除しますか？\nこのカテゴリのブックマークも全て削除されます。`, 'カテゴリを削除', '削除');
+            if (!confirmed) {
                 return;
             }
             
@@ -1149,7 +1171,8 @@
             const filteredVideos = getFilteredVideos();
             const video = filteredVideos[index];
             
-            if (!confirm(`「${video.title}」をゴミ箱に移動しますか？`)) {
+            const confirmed = await showConfirmModal(`「${video.title}」をゴミ箱に移動しますか？`, 'ゴミ箱に移動', '移動');
+            if (!confirmed) {
                 return;
             }
             
@@ -1195,7 +1218,8 @@
                 return;
             }
             
-            if (!confirm(`選択した${count}件の動画をゴミ箱に移動しますか？`)) {
+            const confirmed = await showConfirmModal(`選択した${count}件の動画をゴミ箱に移動しますか？`, 'ゴミ箱に移動', '移動');
+            if (!confirmed) {
                 return;
             }
             
@@ -1679,7 +1703,7 @@
             });
         }
 
-        function handleFile(file) {
+        async function handleFile(file) {
             if (!file.type.startsWith('video/')) {
                 showError('動画ファイルを選択してください');
                 return;
@@ -1687,7 +1711,8 @@
             
             // ファイルサイズ警告（50MB以上）
             if (file.size > 50 * 1024 * 1024) {
-                if (!confirm(`ファイルサイズが${formatFileSize(file.size)}あります。\nアップロードに時間がかかる可能性があります。\n続行しますか？`)) {
+                const confirmed = await showConfirmModal(`ファイルサイズが${formatFileSize(file.size)}あります。\nアップロードに時間がかかる可能性があります。\n続行しますか？`, 'ファイルサイズ確認', '続行');
+                if (!confirmed) {
                     return;
                 }
             }
@@ -2342,7 +2367,8 @@
             const video = videos.find(v => v.id === currentModalVideoId);
             if (!video) return;
             
-            if (!confirm(`「${video.title}」をゴミ箱に移動しますか？`)) {
+            const confirmed = await showConfirmModal(`「${video.title}」をゴミ箱に移動しますか？`, 'ゴミ箱に移動', '移動');
+            if (!confirmed) {
                 return;
             }
             
@@ -2930,7 +2956,8 @@
             const video = trashData[index];
             if (!video) return;
             
-            if (!confirm(`「${video.title}」を完全に削除しますか？\n\n※この操作は取り消せません。`)) {
+            const confirmed = await showConfirmModal(`「${video.title}」を完全に削除しますか？\n\n※この操作は取り消せません。`, '完全に削除', '削除');
+            if (!confirmed) {
                 return;
             }
             
@@ -2948,7 +2975,8 @@
                 return;
             }
             
-            if (!confirm(`ゴミ箱内の${trashData.length}件の動画を完全に削除しますか？\n\n※この操作は取り消せません。`)) {
+            const confirmed = await showConfirmModal(`ゴミ箱内の${trashData.length}件の動画を完全に削除しますか？\n\n※この操作は取り消せません。`, '完全に削除', '削除');
+            if (!confirmed) {
                 return;
             }
             
@@ -2965,7 +2993,8 @@
                 return;
             }
             
-            if (!confirm(`ゴミ箱内の${trashData.length}件の動画を全て復元しますか？`)) {
+            const confirmed = await showConfirmModal(`ゴミ箱内の${trashData.length}件の動画を全て復元しますか？`, '全て復元', '復元');
+            if (!confirmed) {
                 return;
             }
             
